@@ -1,0 +1,39 @@
+<p-dialog #dialog
+          [ngClass]="class"
+          [style]="{ 'height': height }"
+          [(visible)]="displayDialog"
+          (onHide)="hideDialog()"
+          [dismissableMask]="dismissableMask"
+          [focusOnShow]="focusOnShow"
+          [blockScroll]="blockScroll"
+          [maximizable]="maximizable"
+          [draggable]="draggable"
+          [resizable]="resizable"
+          [closable]="closable"
+          [header]="header"
+          [modal]="modal">
+  <ng-template pTemplate="header"
+               *ngIf="!header">
+    <i *ngIf="icon"
+       [ngClass]="icon"
+       [style]="{ 'color': iconColor }"></i>
+    <ng-template [ngTemplateOutlet]="headerTemplate"></ng-template>
+  </ng-template>
+
+  <ng-content></ng-content>
+
+  <ng-template pTemplate="footer">
+    <ng-template [ngTemplateOutlet]="footerTemplate"></ng-template>
+  </ng-template>
+</p-dialog>
+
+
+<ng-template #headerTemplate>
+  <ng-content #headerContent
+              select="[header]"></ng-content>
+</ng-template>
+
+<ng-template #footerTemplate>
+  <ng-content #footerContent
+              select="[footer]"></ng-content>
+</ng-template>

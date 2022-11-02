@@ -1,0 +1,22 @@
+<p-menubar [model]="items">
+  <ng-template pTemplate="start">
+    <img src="../../../../assets/Caloudi-Icon-80x80.png"
+         height="40"
+         alt="logo">
+  </ng-template>
+  <button pButton
+          type="button"
+          class="p-button-rounded"
+          [label]="'中'"
+          (click)="onLangSelect(DocumentLang.CHT)"></button>
+  <button pButton
+          type="button"
+          class="p-button-rounded"
+          [label]="'EN'"
+          (click)="onLangSelect(DocumentLang.ENG)"></button>
+  <button pButton
+          type="button"
+          class="p-button-rounded"
+          [label]="'简'"
+          (click)="onLangSelect(DocumentLang.CHS)"></button>
+</p-menubar>

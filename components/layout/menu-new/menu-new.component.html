@@ -1,0 +1,65 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="main-nav">
+    <div class="container-fluid">
+        
+        <a [routerLink] = "['/']"
+            routerLinkActive="active">
+            <img src="/assets//caloudi_logo_name.png" height="40" class="logo" alt="brand logo">
+        </a>
+
+        <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="NavbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="NavbarCollapse" [ngbCollapse]="isCollapsed">
+            <ul class="caloudi-nav-list">
+                <li class="nav-item active">
+                    <a class="nav-link" (click)="Document()">Document</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" (click)="mainpage()">Get Start</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" (click)="compare()">Compare</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" (click)="shopping()">Cart</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav> -->
+<section id="header">
+  <nav class="navbar navbar-custom navbar-expand-lg navbar-dark bg-dark mb-0" style="background: rgba(0, 0, 0, 0.6)">
+      <div class="container-fluid">
+        <a class="navbar-brand" [routerLink]="['/homepage']">
+          <img src="/assets//caloudi_logo_name.png" height="40" class="logo" alt="brand logo">
+        </a>
+    
+        <!-- Step 3: Toggle the value of the property when the toggler button is clicked. -->
+        <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
+          <i class="pi pi-bars" id="pi-bars-icon" style="font-size: 5rem;"></i>
+        </button>
+    
+        <!-- Step 2: Add the ngbCollapse directive to the element below. -->
+        <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+          <ul class="navbar-nav d-flex justify-content-end">
+            <li class="nav-item active">
+              <!-- Step 4: Close the menu when a link is clicked. -->
+              <a class="nav-link" [routerLink]="['/document']" (click)="isMenuCollapsed = true">Document</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/mainpage']" (click)="isMenuCollapsed = true">Cost Estimation</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/shopping']" (click)="isMenuCollapsed = true">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+</section>
+  

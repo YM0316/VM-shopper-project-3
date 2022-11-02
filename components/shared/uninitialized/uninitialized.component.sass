@@ -1,0 +1,27 @@
+@keyframes uninitialized_animation
+  0%
+    background: #ddd
+  60%
+    background: #b3b2b2
+  80%
+    background: #757575
+  90%
+    background: #b3b2b2
+  100%
+    background: #ddd
+
+
+\:host.uninitialized_section
+  flex: 1
+  min-height: 2rem
+  border-radius: .25rem
+  border: 1px solid transparent
+  animation: uninitialized_animation 1.66s linear infinite
+  &.f100
+    flex: 1 100%
+  &.f0
+    flex: 0
+  &.w100
+    width: 100%
+  &.nh100
+    min-height: 100%

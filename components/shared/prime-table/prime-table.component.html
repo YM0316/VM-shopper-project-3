@@ -1,0 +1,301 @@
+<p-table #dt
+         class="table"
+         [pageLinks]="5"
+         [value]="values"
+         [columns]="columns"
+         [filters]="filters"
+         [dataKey]="dataKey"
+         [scrollable]="false"
+         [sortField]="dataKey"
+         [stateKey]="stateKey"
+         [paginator]="paginator"
+         [groupRowsBy]="pivotKey"
+         [(selection)]="selection"
+         [autoLayout]="autoLayout"
+         [responsiveLayout]="'scroll'"
+         [scrollHeight]="scrollHeight"
+         [showCurrentPageReport]="true"
+         [rowExpandMode]="rowExpandMode"
+         [selectionMode]="selectionMode"
+         [rowsPerPageOptions]="pageItems"
+         [exportFilename]="exportFilename"
+         [expandedRowKeys]="expandedRowKeys"
+         [rows]="paginator ? pageSize : null"
+         [loading]="loading || manualLoading"
+         [paginatorPosition]="paginatorPosition"
+         [paginatorDropdownScrollHeight]="'20rem'"
+         [globalFilterFields]="globalFilterFields"
+         [sortOrder]="paginator ? sortOrder : null"
+         [rowGroupMode]="pivotKey ? 'rowspan' : null"
+         [currentPageReportTemplate]="hasData ? '{currentPage} - {totalPages}' : '1 - 1'"
+         (onStateRestore)="onStateRestore($event)"
+         (onRowCollapse)="onRowCollapse($event)"
+         (onRowUnselect)="onRowUnselect($event)"
+         (onRowExpand)="onRowExpand($event)"
+         (onRowSelect)="onRowSelect($event)"
+         (onStateSave)="onStateSave($event)"
+         (onLazyLoad)="onLazyLoad($event)"
+         (onFilter)="onFilter($event)"
+         (onPage)="onPage($event)"
+         (onSort)="onSort($event)">
+  <ng-template *ngIf="caption"
+               pTemplate="caption"
+               let-columns="columns">
+    <div>
+      <ng-container *ngTemplateOutlet="captionTemplate; context: { columns: columns }">
+      </ng-container>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr *ngIf="loading">
+      <th [attr.scope]="'column'">
+        <div th></div>
+      </th>
+    </tr>
+
+    <tr *ngIf="!loading && !emptyValueMessage">
+      <ng-container *ngIf="rowExpansion">
+        <th [attr.scope]="'column'">
+          <div th
+               class="expension_column"></div>
+          <!-- <i class="pi pi-ellipsis-h text-muted header_icons"></i> -->
+        </th>
+      </ng-container>
+
+      <ng-container *ngFor="let column of columns; let i = index">
+        <!-- <ng-container *ngIf="column.field !== 'actionGroup'"> -->
+        <ng-container *ngIf="column.sort === undefined || column.sort; else elseBlock">
+          <th *ngIf="column.header"
+              [pSortableColumn]="paginator ? column.field : null"
+              [attr.scope]="'column'"
+              [ngClass]="{ 'sticky_column': i === stickyColumn }">
+            <div th
+                 [pTooltip]="column.toolTip"
+                 tooltipPosition="top">
+              <span>
+                {{ column.header }}
+                <i *ngIf="column.toolTip"
+                   class="pi pi-exclamation-circle"></i>
+              </span>
+              <p-sortIcon *ngIf="paginator"
+                          [field]="column.field"></p-sortIcon>
+            </div>
+          </th>
+        </ng-container>
+
+        <ng-template #elseBlock>
+          <th [attr.scope]="'column'"
+              [ngClass]="{ 'sticky_column': i === stickyColumn }">
+            <div th>
+              <span [textContent]="column.header"></span>
+            </div>
+          </th>
+        </ng-template>
+      </ng-container>
+      <!-- </ng-container> -->
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body"
+               let-rowData
+               let-rowIndex="rowIndex"
+               let-expanded="expanded"
+               [logSelected]="{ label: 'selected_row', payload: selectedRow, rowNumber: selectedRow?.index }">
+    <tr [pSelectableRow]="rowData"
+        [pSelectableRowIndex]="rowIndex">
+      <td *ngIf="rowExpansion"
+          class="row_exp"
+          [ngClass]="{ 'row_expanded_active': expanded }"
+          [logRowExpand]="getExpandLogItem(rowData, expanded)">
+        <a href="#"
+           [pRowToggler]="rowData"
+           (click)="bindSelection(rowData)">
+          <i class="pi pi-fw pi-angle-right"
+             [ngClass]="{ 'row_expanded_active': expanded }"></i>
+        </a>
+      </td>
+
+
+      <ng-container *ngFor="let column of columns; let i = index">
+        <!-- <td *ngIf="isPivotKey(column.field) && getPivotGroup(rowData, rowIndex, i)"
+            [attr.rowspan]="getRowspan(rowData, rowIndex, i) + (rowspanDebug ? 0 : pivotKey?.length - i)"
+            [ngClass]="{ 'sticky_column': i === stickyColumn,
+                         'action_group': actionGroupFix(column) }"> -->
+        <td *ngIf="isPivotKey(column.field) && getPivotGroup(rowData, rowIndex, i)"
+            [attr.rowspan]="getRowspan(rowData, rowIndex, i)"
+            [ngClass]="{ 'sticky_column': i === stickyColumn,
+                         'action_group': actionGroupFix(column) }">
+          <ng-container *ngIf="!specificColumn(column.field)">
+            <span *ngIf="rowspanDebug"
+                  class="text-muted rowspan_debug">
+              #row: {{ rowIndex }},
+              #diff: {{ getNextDiffRow(rowData, rowIndex, column.field) }},
+              #rowspan: {{ getRowspan(rowData, rowIndex, i, true) }}
+            </span>
+            <div tb
+                 *ngIf="valueEmpty(rowData, column.field); else nullTemplate">
+              <ng-container *ngTemplateOutlet="columnTemplate;
+                  context: { column: column, rowData: rowData, rowIndex: rowIndex, expanded: expanded }">
+              </ng-container>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="specificColumn(column.field)">
+            <ng-container [ngTemplateOutlet]="customBodyTemplate"
+                          [ngTemplateOutletContext]="{ column: column, rowData: rowData, rowIndex: rowIndex }">
+            </ng-container>
+          </ng-container>
+        </td>
+
+        <td *ngIf="rowspanDebug && isPivotKey(column.field) && !getPivotGroup(rowData, rowIndex, i)">
+          <span class="text-muted rowspan_debug">
+            #row: {{ rowIndex }},
+            #diff: {{ getNextDiffRow(rowData, rowIndex, column.field) }},
+            #rowspan: {{ getRowspan(rowData, rowIndex, i, true) }}
+          </span>
+          <div class="text-danger ml-2">{{ rowData[column.field] }}</div>
+        </td>
+
+        <td *ngIf="!isPivotKey(column.field)"
+            [ngClass]="{ 'sticky_column': i === stickyColumn,
+                       'action_group': actionGroupFix(column) }">
+          <span *ngIf="rowspanDebug && pivotKey"
+                class="text-muted rowspan_debug">
+            #row: {{ rowIndex }},
+            #diff: {{ getNextDiffRow(rowData, rowIndex, column.field) }}
+          </span>
+          <ng-container *ngIf="!specificColumn(column.field)">
+            <div tb
+                 *ngIf="valueEmpty(rowData, column.field); else nullTemplate">
+              <ng-container *ngTemplateOutlet="columnTemplate;
+          context: { column: column, rowData: rowData, rowIndex: rowIndex, expanded: expanded }">
+              </ng-container>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="specificColumn(column.field)"
+                        [ngTemplateOutlet]="customBodyTemplate"
+                        [ngTemplateOutletContext]="{ column: column, rowData: rowData, rowIndex: rowIndex }">
+          </ng-container>
+        </td>
+      </ng-container>
+    </tr>
+
+    <!-- <tr *ngIf="pivotKey && getNextDiffRow(rowData, rowIndex) === rowIndex && getNextDiffCol(rowData, rowIndex)">
+      <td [attr.colspan]="columns.length">
+        <span *ngIf="true || rowspanDebug"
+              class="text-muted rowspan_debug">
+          #row: {{ rowIndex }},
+          #diffRow: {{ getNextDiffRow(rowData, rowIndex) }},
+          #diffCol: {{ getNextDiffCol(rowData, rowIndex) }},
+          #rowspan: {{ getRowspan(rowData, rowIndex, null, true) }},
+          #colspan: {{ columns.length }}
+        </span>
+        <ng-container *ngFor="let column of columns; let i = index">
+          <ng-container *ngIf="!pivotKey.includes(column.field)">
+            {{ sumData(getGroupRange(rowData, rowIndex, column.field).range, column.field) }}
+          </ng-container>
+        </ng-container>
+      </td>
+    </tr> -->
+  </ng-template>
+
+  <ng-template pTemplate="rowexpansion"
+               let-rowData
+               let-columns="columns"
+               let-rowIndex="rowIndex">
+    <tr>
+      <td [attr.colspan]="columns.length + 1">
+        <div tb
+             class="row_expanded">
+          <ng-container *ngTemplateOutlet="rowExpansionTemplate;
+          context: {columns: columns, rowData: rowData, rowIndex: rowIndex }">
+          </ng-container>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="paginatorleft"
+               let-state>
+    <section>
+      <p *ngIf="state.totalRecords > 10"
+         [translate]="'DATA_TABLE.PAGINATOR'"
+         [translateParams]="{
+            first: (state.page * state.rows) + 1,
+            last:  (state.rows * (state.page + 1)) <= state.totalRecords ?
+                   (state.rows * (state.page + 1)) : state.totalRecords,
+            totalRecords: state.totalRecords
+          }"></p>
+      <p *ngIf="state.totalRecords <= 10 && state.totalRecords > 1"
+         [translate]="'DATA_TABLE.LESS_THAN_10'"
+         [translateParams]="{ totalRecords: state.totalRecords }"></p>
+      <p *ngIf="state.totalRecords === 1"
+         [translate]="'DATA_TABLE.ONE_RECORD'"></p>
+    </section>
+  </ng-template>
+
+  <ng-template pTemplate="paginatorright">
+    <i class="pi pi-search"></i>
+    <section class="search_bar p-inputgroup">
+      <input pInputText
+             type="text"
+             [(ngModel)]="filterInput"
+             [placeholder]="'LABEL.FILTER' | translate"
+             (input)="searchBoxInput($event)"
+             [logInput]="searchBoxInputValue">
+      <button pButton
+              [label]="'ACTION.EXPORT' | translate"
+              icon="pi pi-download"
+              (click)="exportCSV()"
+              [logButton]="logEventTableColumns">
+      </button>
+    </section>
+  </ng-template>
+</p-table>
+
+
+<section *ngIf="loading">
+  <div class="data_loading">
+    <p class="text-center">{{ 'DATA_TABLE.LOADING' | translate }}</p>
+  </div>
+</section>
+
+<section *ngIf="!hasData && !loading">
+  <div class="empty_data">
+    <p class="text-center">{{ (emptyValueMessage || 'PAGE.DATA_QUERY_EMPTY') | translate }}.</p>
+  </div>
+</section>
+
+
+<ng-template pTemplate="emptymessage"
+             let-columns>
+  <tr>
+    <td [attr.colspan]="columns.length">
+      {{ 'PAGE.NO_RECORDS_FOUND' | translate }}
+    </td>
+  </tr>
+</ng-template>
+
+<ng-template #nullTemplate
+             let-c="class">
+  <div tb
+       class="text-center text-muted"
+       [ngClass]="c">{{ stringReplacement }}</div>
+</ng-template>
+
+<ng-template #customBodyTemplate
+             let-column="column"
+             let-rowData="rowData"
+             let-rowIndex="rowIndex">
+  <ng-container *ngIf="specificColumnfilter(column.field)">
+    <ng-container *ngIf="valueEmpty(rowData, column.field); else nullTemplate">
+      <div tb
+           class="time">
+        <span>{{ rowData[column.field] | date: 'yyyy-MM-dd' }}</span>
+        <span>{{ rowData[column.field] | date: 'HH:mm:ss' }}</span>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-template>

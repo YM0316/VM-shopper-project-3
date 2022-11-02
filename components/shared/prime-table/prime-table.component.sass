@@ -1,0 +1,157 @@
+body prime-table
+  =flexCenter
+    display: flex
+    justify-content: center
+    align-items: center
+  .rowspan_debug
+    font-size: 10px
+  i.header_icons
+    display: flex
+  th.sticky_column, td.sticky_column
+    position: sticky
+    left: 0
+    z-index: 10
+  .empty_data, .data_loading, .customize_string
+    width: 100%
+    padding: 2rem 1rem
+  .data_loading > p::after
+    content: '.'
+    animation: loading 2s infinite
+  .p-paginator-current
+    cursor: default
+  .p-sortable-column
+    // position: relative
+    i.pi-sort-alt
+      // position: absolute
+      // right: .5rem
+      font-size: .75rem
+      opacity: 0
+    &:hover i.pi-sort-alt
+      opacity: .75
+
+  div[tb], div[th]
+    +flexCenter
+    min-width: 2rem
+    min-height: 2.5rem
+    padding: .25rem .5rem
+    > *:not(p-sorticon), span:not(.p-radiobutton-icon)
+      flex: 1
+
+  div[th]
+    span
+      text-align: center
+    &.expension_column
+      text-align: center
+      min-width: 2rem
+
+  div[tb]
+    &.row_expanded
+      padding: .5rem
+    > date
+      text-align: right
+    > a, > span:only-child.text-end, > div > button
+      white-space: nowrap
+    > span
+      white-space: pre-wrap
+    > ul
+      list-style: none
+    > div
+      text-align: center
+      > button
+        word-break: keep-all
+        &:not(:last-of-type)
+          margin-inline-end: .25rem
+      &.action_group
+        padding: 0 .5rem
+        display: inline-flex
+        justify-content: center
+        button
+          width: 2rem
+          height: 2rem
+          &.p-button
+            min-width: unset
+        > div
+          margin-inline-end: .25rem
+
+  .p-datatable-wrapper .p-datatable-thead, .p-datatable-wrapper .p-datatable-tbody
+    > tr
+      th, td
+        padding: 0
+        vertical-align: middle
+        border: 1px solid var(--surface-d)
+        cursor: default
+        transition: .1s
+      td
+        > a:only-child
+          +flexCenter
+          > i.pi.pi-fw.pi-angle-right
+            font-size: 1.25rem
+            transform: rotate(0)
+            transition: .2s
+            &.row_expanded_active
+              transform: rotate(90deg)
+        &.row_exp
+          width: 3rem
+          i
+            font-size: 1.5rem
+            margin: 0 .5rem
+        &.action_group
+          width: 0
+        .time
+          display: flex
+          flex-flow: column
+          // align-items: flex-end
+          span
+            text-align: right
+            white-space: nowrap
+
+      &.expansion td > div
+        align-items: flex-start
+
+  .p-paginator
+    .p-dropdown
+      +flexCenter
+      padding: .5rem
+
+    .p-paginator-pages .p-paginator-page,
+    .p-paginator-first,
+    .p-paginator-prev,
+    .p-paginator-next,
+    .p-paginator-last
+      height: 2rem
+      min-width: 2rem
+
+    .p-paginator-left-content,
+    .p-paginator-right-content
+      flex: 1
+      &, .search_bar, .p-inputtext.p-dropdown-label
+        +flexCenter
+
+    .p-paginator-left-content
+      justify-content: flex-start
+      padding-inline-end: 2rem
+
+    .p-paginator-right-content
+      justify-content: flex-end
+      padding-inline-start: 2rem
+      i
+        margin-inline-end: .5rem
+      .search_bar
+        min-width: 20rem
+        input
+          width: 100%
+        button
+          min-width: 7rem
+
+  @keyframes loading
+    0%
+      content: '.'
+    33%
+      content: '..'
+    66%
+      content: '...'
+
+// chinese word break
+html:lang(zh-hant), html:lang(zh-hans)
+  .p-datatable-wrapper tr th > div
+    white-space: nowrap
