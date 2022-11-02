@@ -28,7 +28,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 
 ## Site link
-1. Currency: https://tw.rter.info/capi.php
+1. Currency rate: https://tw.rter.info/capi.php
 2. Recommend api
    * Azure: http://35.204.125.116:3389/azure_v2
    * GCP: http://35.204.125.116:3389/gcp_v2
