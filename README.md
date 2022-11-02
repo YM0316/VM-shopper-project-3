@@ -27,4 +27,13 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 
-##Site link
+## Site link
+1. Currency: https://tw.rter.info/capi.php
+2. Recommend api
+   * Azure: http://35.204.125.116:3389/azure_v2
+   * GCP: http://35.204.125.116:3389/gcp_v2
+   * AWS: http://35.204.125.116:3389/aws_v2
+3. Recommend data source
+   * Azure: https://azureprice.net/
+   * GCP: https://gcpinstances.doit-intl.com/
+   * AWS: https://aws.amazon.com/tw/ec2/pricing/on-demand/
