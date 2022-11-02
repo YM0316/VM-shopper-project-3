@@ -1,0 +1,50 @@
+{
+  "Canada" :
+  [
+    {
+      "AWS" : ["ca-central-1"],
+      "GCP" : ["northamerica-northeast1","northamerica-northeast2"],
+      "Azure" : ["canadacentral","canadaeast"]
+    }
+  ],
+  "Europe" :
+  [
+    {
+      "AWS" : ["eu-central-1","eu-west-1","eu-west-2","eu-south-1","eu-west-3","eu-north-1"],
+      "GCP" : ["europe-central2","europe-north1","europe-west1","europe-west2","europe-west3","europe-west4","europe-west6","europe-west8","europe-west9"],
+      "Azure" : ["northeurope","westeurope","norwayeast","norwaywest","germanynorth","germanywestcentral","francecentral","francesouth","uksouth","ukwest","westus3","switzerlandnorth","switzerlandwest","swedencentral","swedensouth"]
+    }
+  ],
+  "United States" :
+  [
+    {
+      "AWS" : ["us-east-1","us-east-2","us-west-1","us-west-2"],
+      "GCP" : ["us-central1","us-east1","us-east4","us-west1","us-west2","us-west3","us-west4"],
+      "Azure" : ["centralus","eastus","eastus2","northcentralus","southcentralus","westus","westus2","westcentralus"]
+    }
+  ],
+  "Asia Pacific" :
+  [
+    {
+      "AWS" : ["af-south-1","ap-east-1","ap-southeast-3","ap-south-1","ap-northeast-3","ap-northeast-2","ap-southeast-1","ap-southeast-2","ap-northeast-1"],
+      "GCP" : ["asia-east1","asia-east2","asia-northeast1","asia-northeast2","asia-northeast3","asia-south1","asia-southeast1","asia-southeast2","australia-southeast1","australia-southeast2"],
+      "Azure" : ["koreacentral","koreasouth","japaneast","japanwest","eastasia","southeastasia","southafricanorth","southafricawest","centralindia","southindia","westindia","australiacentral","australiacentral2","australiaeast","australiasoutheast"]
+    }
+  ],
+  "South America" :
+  [
+    {
+      "AWS" : ["sa-east-1"],
+      "GCP" : ["southamerica-east1", "southamerica-west1"],
+      "Azure" : ["brazilsouth","brazilsoutheast"]
+    }
+  ],
+  "Middle East" :
+  [
+    {
+      "AWS" : ["me-south-1"],
+      "GCP" : [],
+      "Azure" : ["uaecentral","uaenorth"]
+    }
+  ]
+}

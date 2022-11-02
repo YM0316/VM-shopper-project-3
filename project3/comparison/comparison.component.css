@@ -1,0 +1,221 @@
+#selected_area{
+
+    margin: 0.5vh;
+    padding-top:4vh;
+    height: 25vh;
+    background: #E8EBFD;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    font-size: 16px;
+}
+
+/* first line */
+#container_first_line{
+    display: grid;
+    padding-top: 2vh;
+    height: 7vh;
+    max-width: 90vw;
+    margin: auto;
+    gap: 5px;
+    grid-template-areas:
+    "Vendor region currency Platform";
+
+    /* 現在first line & second line對齊方式 */
+    margin-left: 6vw;
+}
+#Vendor_group{
+    grid-area: Vendor;
+}
+#region_group{
+    grid-area: region;
+}
+#currency_group{
+    grid-area: currency;
+}
+#Platform_group{
+    grid-area: Platform;
+}
+/* button離文字的距離控制 */
+.btn-group{
+    margin-left: 1vw;
+}
+
+/* second_line */
+#container_second_line{
+    display: grid;
+    padding-top: 2vh;
+    height: 18vh;
+    max-width: 90vw;
+    margin: auto;
+    gap: 5px;
+    /* 宣告改面的配置方式 */
+    grid-template-areas:
+    "memory CPU GPU Query";
+}
+#memory_group{
+    grid-area: memory;
+}
+#CPU_group{
+    grid-area: CPU;
+}
+#GPU_group{
+    grid-area: GPU;
+}
+#Query_group{
+    grid-area: Query;
+}
+#memory_number_style{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    width: 2vw;
+    text-align: center;
+
+    /* baby-purple */
+
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #E8EBFD;
+    border-radius: 16px;
+}
+.slider_maxnumber_style{
+  width: 4.5vw;
+  background: linear-gradient(0deg, rgba(170, 170, 170, 0.2), rgba(170, 170, 170, 0.2)), #E8EBFD;
+  border-radius: 16px;
+  margin-left: 18vw;
+}
+
+.slider_minnumber_style{
+  width: 3vw;
+  background: linear-gradient(0deg, rgba(170, 170, 170, 0.2), rgba(170, 170, 170, 0.2)), #E8EBFD;
+  border-radius: 16px;
+  margin-left: 4vw;
+}
+
+#Query_button{
+    margin-top: 2vh;
+    margin-left: 1vw;
+    width: 6vw;
+    height: 7vh;
+
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 40px;
+
+    /* footer purple */
+
+    background: #565E85;
+    border-radius: 4px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    color: #FFFFFF;
+
+}
+#Query_button:hover{
+    background: #DF6160;
+}
+
+/* silde range */
+::ng-deep .custom-slider .ngx-slider .ngx-slider-selection{
+    background: #565E85;
+}
+
+::ng-deep .custom-slider .ngx-slider .ngx-slider-bar{
+    height: 1vh;
+    border-radius: 40px;
+}
+::ng-deep .custom-slider .ngx-slider .ngx-slider-pointer{
+    /* Grayscale / Background */
+    background: #F7F7FC;
+    /* footer purple */
+    border: 2px solid #565E85;
+    border-radius: 40px;
+}
+
+
+/* mat-select */
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: #FFFFFF;
+}
+::ng-deep .mat-select-trigger {
+    min-width: 5vw;
+}
+::ng-deep .mat-form-field {
+    font-size: 14px;
+    text-align: center;
+}
+::ng-deep .mat-form-field .mat-form-field-infix {
+    height: 2vh;
+    width: 8vw;
+ }
+
+
+  /* Main area */
+#Main_area{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+    margin-top: 2vh;
+    height:100vh;
+}
+#Main_area_first_line{
+    /* padding-top: 2vh; */
+    margin: auto ; 
+}
+
+#Prev_button{
+    border: 1px solid #445FD2;
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    background: #FFFFFF;
+    color: #051B44;
+    font-weight: 400;
+    font-size: 14px;
+    margin-top: 3vh;
+    margin-left:2vw;
+    width: 4vw; 
+    height: 3vh;
+}
+
+#Comparison_area{
+    margin: 5vh 20vw 5vh;
+    /* width: 70w; */
+    font-weight: 400;
+    font-size: 24px;
+    align-items: center;
+    text-align: center;
+}
+
+#Comparison_area_item1{
+    background: #E8EBFD;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    /* height: 50vh; */
+
+}
+
+#Comparison_area_item2{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    /* height: 50vh; */
+    /* margin-left:4vw; */
+}
+
+.Comparison_text{
+    margin-top: 4vh;
+}
+
+.saving_text{
+    color:red; 
+    font-size: 16px;
+    text-align: right;
+    font-weight: 600; 
+}

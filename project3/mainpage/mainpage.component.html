@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible"
+        content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+</head>
+
+  <!--  navbar block -->
+  <div class="Query_nav_background">
+    <!--  navbar -->
+    <digi-menu></digi-menu>
+
+    <div class="Query_navbar_document">
+      <div class="Query_navbar_title">
+
+
+        <p>Cloud Calculator</p>
+      </div>
+
+      <div class="describe">
+        <p class="navbar_content">
+          Estimate your bill for multiple cloud product
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+<!-- full-background body container -->
+<div class="full-bg" *ngIf="Comparison_check === 0">
+  <div class="top-container row">
+    <div class="back-navigation col-xl-1 col-lg-2 col-md-2 col-sm-2 col-4">
+      <a class="back-btn" [routerLink]="['/homepage']">
+        <i class="pi pi-arrow-left" style="font-size: 3rem; color: white;"></i>
+    </a>
+    </div>
+    <div class="Text-Title d-flex col-xl-11 col-lg-10 col-md-10 col-sm-10 col-8 text-center">
+      <h3 class="top-text">
+        Calculate your virtual machine
+      </h3>
+    </div>
+  </div>
+
+  <!-- bottom part -->
+  <div class="bottom-container row">
+    <div class="left-container  col-xxl-3 col-xl-3 col-lg-3">
+      <div class="filter-container">
+        <div class="filter-text-container">
+          <h3 class="Filter-text text-center ">Filters</h3>
+          <hr class="divide-line">
+          <br>
+        </div>
+
+        <!-- Currency filter select -->
+        <div class="select-filter-container">
+          <div class="Currency-text-container">
+            <span class="Currency-text">Currency</span>
+          </div>
+          <div class="currency-select-filter-container">
+            <select class="form-control selectpicker"
+                    data-live-search="true"
+                    [(ngModel)]="selectedcurrency">
+                    <option
+                      *ngFor="let currency of currencies">
+                      {{currency.viewValue}}
+                    </option>
+            </select>
+          </div>
+        </div>
+        <!-- Currency filter select -->
+
+        <!-- Platform filter select -->
+        <div class="select-filter-container">
+          <div class="Currency-text-container">
+            <span class="Currency-text">Platform</span>
+          </div>
+          <div class="currency-select-filter-container">
+            <select class="form-control selectpicker"
+                    data-live-search="true"
+                    [(ngModel)]="selectedPlatform">
+                    <option
+                    *ngFor="let Platform of Platforms">
+                    {{Platform.viewValue}}
+                    </option>
+            </select>
+          </div>
+        </div>
+        <!-- Platform filter select -->
+
+        <!-- CPU filter select -->
+        <div class="select-filter-container">
+          <div class="Currency-text-container">
+            <span class="Currency-text">CPU (unit)</span>
+          </div>
+          <div class="currency-select-filter-container">
+            <select class="form-control selectpicker" data-live-search="true" [(ngModel)]="selectedCPU">
+              <option *ngFor="let item of CPU_api_value">
+                {{item.value}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <!-- CPU filter select -->
+
+        <!-- RAM filter select -->
+        <div class="select-filter-container">
+          <div class="Currency-text-container">
+            <span class="Currency-text">Memory (GB)</span>
+          </div>
+          <div class="currency-select-filter-container">
+            <select class="form-control selectpicker" data-live-search="true" [(ngModel)]="selectedmemory">
+              <option *ngFor="let item of memory_api_value">
+                {{item.value}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <!-- RAM filter select -->
+
+        <!-- GPU filter select -->
+        <div class="select-filter-container">
+          <div class="Currency-text-container">
+            <span class="Currency-text">GPU (unit)</span>
+          </div>
+          <div class="currency-select-filter-container">
+          <select class="form-control selectpicker" data-live-search="true" [(ngModel)]="selectedGPU">
+            <option *ngFor="let item of GPU_api_value">
+              {{item.value}}
+            </option>
+          </select>
+          </div>
+        </div>
+        <!-- GPU filter select -->
+
+        <!-- Query Button -->
+        <div class="query-button-container">
+          <button type="button" (click)="GetVMQuery()" id="query-button">Query</button>
+        </div>
+        <!-- Query Button -->
+      <!-- bottom part -->
+
+      <!-- recommend-part -->
+      </div>
+      <div class="recommend-container">
+        <div class="recommend-top-container">
+          <div class="recommend-top-left-container col-2 col-sm-2 col-md-2 col-lg-3 col-xl-4 col-xxl-3 text-center">
+            <img class="light-bulb-image" src="assets/icons8-lightbulb-64 1.png"/>
+          </div>
+          <div class="recommend-top-right-container col-10 col-sm-10 col-md-10 col-lg-9 col-xl-8 col-xxl-9 text-center">
+            <span class="recommend-text text-center mb-2">Don't know what to pick?</span>
+            <span class="recommend-text text-center">Let us recommend for you</span>
+          </div>
+        </div>
+        <div class="recommend-bottom-button-container col-12 col-sm-12 col-md-12">
+          <button type="button" id="recommend-button" (click)="GetRecommendVM()">click here for recommendations</button>
+        </div>
+      </div>
+      <!-- recommend-part -->
+
+    </div>
+    <div class="right-container col-xxl-9 col-xl-9 col-lg-9">
+      <!-- Query API Table -->
+      <!-- <div class="table-container">
+        <div id="table_style">
+
+          <prime-table [columnTemplate]="tableBody" [values]="Query_ALLdata" [columns]="tableColumn" *ngIf="table_check===1">
+            <ng-template #tableBody let-column="column" let-rowData="rowData">
+              <ng-container [ngSwitch]="column.field">
+
+
+                <ng-container *ngSwitchCase="'monthlyCost'">
+                  <span class="text-end text-primary" align="center" style="font-size: 16px;" *ngIf="selectedcurrency==='USD'">
+                    {{ rowData[column.field] | number: '1.0-2' }}
+                  </span>
+                  <span class="text-end text-primary" align="center" style="font-size: 16px;" *ngIf="selectedcurrency==='TWD'">
+                    {{ rowData[column.field]*USD_currency["USDTWD"]["Exrate"] | number: '1.0-2' }}
+                  </span>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'Action'">
+                  <div class="form-check-lg form-switch form-switch-lg" style="text-align: center; ">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                      [(ngModel)]="rowData[column.field]">
+                  </div>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'vendor'">
+                  <img src="assets/Azure.png" style="max-width: 4vw;" *ngIf="rowData[column.field]==='Azure'" />
+                  <img src="assets/GCP.png" style="max-width: 6vw;" *ngIf="rowData[column.field]==='GCP'" />
+                  <img src="assets/AWS.png" style="max-width: 4vw;" *ngIf="rowData[column.field]==='AWS'" />
+                </ng-container>
+
+                <ng-container *ngSwitchDefault>
+                  <span style="text-align: center; font-size: 16px;">{{ rowData[column.field] }}</span>
+                </ng-container>
+              </ng-container>
+            </ng-template>
+          </prime-table> -->
+
+          <!-- Query Api TABLE -->
+
+          <!-- Result part -->
+          <p-table responsiveLayout="stack" [value]="Query_ALLdata" scrollHeight="flex" [rows]="10" [rowHover]="true"
+            [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"  [columns]="tableColumn"
+            [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" *ngIf="table_check===1" >
+            <ng-template pTemplate="header">
+              <tr>
+                <th>
+                  <span style="text-align: center; font-size: 16px;">Action</span>
+                </th>
+                <th pSortableColumn="Vendor">
+                  <span style="text-align: center; font-size: 16px;">
+                    Vendor
+                    <p-sortIcon field="Vendor"></p-sortIcon>
+                  </span>
+                </th>
+                <th pSortableColumn="MachineType">
+                  <span style="text-align: center; font-size: 16px;">
+                    MachineType
+                    <p-sortIcon field="MachineType"></p-sortIcon>
+                  </span>
+                </th>
+                <th pSorthableColumn="CPU">
+                  <span style="text-align: center; font-size: 16px;">
+                    CPU
+                    <p-sortIcon field="CPU"></p-sortIcon>
+                  </span>
+                </th>
+                <th pSorthableColumn="gPUs">
+                  <span style="text-align: center; font-size: 16px;">
+                    GPU
+                    <p-sortIcon field="gPUs"></p-sortIcon>
+                  </span>
+                </th>
+                <th pSorthableColumn="memory">
+                  <span style="text-align: center; font-size: 16px;">
+                    Memory
+                    <p-sortIcon field="memory"></p-sortIcon>
+                  </span>
+                </th>
+                <th pSorthableColumn="region">
+                  <span style="text-align: center; font-size: 16px;">
+                    Region
+                    <p-sortIcon field="region"></p-sortIcon>
+                  </span>
+                </th>
+                <th pSorthableColumn="monthlyCost">
+                  <span style="text-align: center; font-size: 16px;">
+                    MonthlyCost
+                    <p-sortIcon field="monthlyCost"></p-sortIcon>
+                  </span>
+                </th>
+                <th pSorthableColumn="latency">
+                  <span style="text-align: center; font-size: 16px;">
+                    Latency
+                    <p-sortIcon field="latency"></p-sortIcon>
+                  </span>
+                </th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-data let-column="cols" let-rowData="rowData" sortMode="multiple">
+              <!-- *ngFor="let Query_ALLdatas of Query_ALLdata" -->
+              <tr>
+                <td>
+                  <span class="p-column-title" style="text-align: center; font-size: 16px;">
+                    Action
+                  </span>
+                  <!-- {{ Query_ALLdatas.Action }} -->
+                  <p-checkbox [binary]="true" type="checkbox" role="checkbox" id="flexSwitchCheckDefault"
+                    [(ngModel)]="data.Action"></p-checkbox>
+                  <!-- <div class="form-check-lg form-switch form-switch-lg" style="text-align: center; ">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                                      [(ngModel)]="Query_ALLdatas.Action">
+                  </div> -->
+                </td>
+                <td>
+                    <span class="p-column-title" style="text-align: center; font-size: 16px;">
+                      Vendor
+                    </span>
+                    <!-- {{ Query_ALLdatas.vendor }} -->
+                    <img src="assets/Azure.png" style="max-width: 4vw;" *ngIf="data.vendor==='Azure'" />
+                    <img src="assets/GCP.png" style="max-width: 6vw;" *ngIf="data.vendor==='GCP'" />
+                    <img src="assets/AWS.png" style="max-width: 4vw;" *ngIf="data.vendor==='AWS'" />
+                </td>
+                <td>
+                  <span class="p-column-title" style="text-align: center; font-size: 16px;">
+                    MachineType
+                  </span>
+                  <!-- {{ Query_ALLdatas.machineType }} -->
+                  <span style="text-align: center; font-size: 16px;">{{ data.machineType }}</span>
+                </td>
+                <td>
+                  <span class="p-column-title" style="text-align: center; font-size: 16px;">
+                    CPU
+                  </span>
+                  <!-- {{ Query_ALLdatas.vCPUs }} -->
+                  <span style="text-align: center; font-size: 16px;">{{ data.vCPUs }}</span>
+                </td>
+                <td>
+                  <span class="p-column-title" style="text-align: center; font-size: 16px;">
+                    GPU
+                  </span>
+                  <!-- {{ Query_ALLdatas.gPUs }} -->
+                  <span style="text-align: center; font-size: 16px;">{{ data.gPUs }}</span>
+                </td>
+                <td>
+                  <span class="p-column-title" style="text-align: center; font-size: 16px;">
+                    Memory
+                  </span>
+                  <!-- {{ Query_ALLdatas.memory }} -->
+                  <span style="text-align: center; font-size: 16px;">{{ data.memory }}</span>
+                </td>
+                <td>
+                  <span class="p-column-title" style="text-align: center; font-size: 16px;">
+                    Region
+                  </span>
+                  <!-- {{ Query_ALLdatas.region }} -->
+                  <span style="text-align: center; font-size: 16px;">{{ data.region }}</span>
+                </td>
+                <td>
+                  <span class="p-column-title" style="text-align: center; font-size: 16px;">
+                    MonthlyCost
+                  </span>
+                  <!-- {{ Query_ALLdatas.monthlyCost }} -->
+                  <span class="text-end text-primary" align="center" style="font-size: 16px;" *ngIf="selectedcurrency==='USD'">
+                    {{ data.monthlyCost | number: '1.0-2' }}
+                  </span>
+                  <span class="text-end text-primary" align="center" style="font-size: 16px;" *ngIf="selectedcurrency!='USD'">
+                    {{ data.monthlyCost*USD_currency["USDTWD"]["Exrate"] | number: '1.0-2' }}
+                  </span>
+                </td>
+                <td>
+                  <span class="p-column-title" style="text-align: center; font-size: 16px;">
+                    Latency
+                  </span>
+                  <!-- {{ Query_ALLdatas.latencyFromYou }} -->
+                  <span style="text-align: center; font-size: 16px;">{{ data.latencyFromYou }}</span>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+
+          <!-- Result part -->
+          <div class="choose-preference-container">
+            <div class="preference-select-filter-container col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+              <select class="form-control selectpicker" data-live-search="true" [(ngModel)]="selectedpreference">
+                <option *ngFor="let item of preferences">
+                  {{item.value}}
+                </option>
+              </select>
+            </div>
+            <div class="next-button-container col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+              <button type="button" (click)="Next_button()" id="next-button">Next</button>
+            </div>
+          </div>
+        <!-- </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+<!-- after pressing Comparison -->
+<div class="full-bg" *ngIf="Comparison_check === 1">
+    <div class="top-container row">
+      <div class="back-navigation col-xl-1 col-lg-2 col-md-2 col-sm-2 col-4">
+        <a class="back-btn" (click)="Prev_button()">
+          <i class="pi pi-arrow-left" style="font-size: 3rem; color: white;"></i>
+        </a>
+      </div>
+      <div class="Text-Title d-flex col-xl-11 col-lg-10 col-md-10 col-sm-10 col-8 text-center">
+        <h3 class="top-text">
+          Compare Virtual Machine
+        </h3>
+      </div>
+    </div>
+    <!-- bottom part -->
+    <div class="bottom-container row justify-content-between">
+
+      <!-- Comparison left container -->
+      <div class="left-comparison-container col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+
+        <!-- Machine name -->
+        <div class="machine-type-container">
+          <div class="comparison-text">
+            {{Comparison_VMdata[0]['machineType']}}
+          </div>
+        </div>
+        <!-- Machine name -->
+
+        <!-- vendor icon -->
+        <div class="vendor-container">
+          <div class="vednor-icon">
+            <img src="assets/Azure.png" style="max-height: 8vh" *ngIf="Comparison_VMdata[0]['vendor']==='Azure'" />
+            <img src="assets/GCP.png" style="max-height: 8vh" *ngIf="Comparison_VMdata[0]['vendor']==='GCP'" />
+            <img src="assets/AWS.png" style="max-height: 8vh" *ngIf="Comparison_VMdata[0]['vendor']==='AWS'" />
+          </div>
+        </div>
+        <!-- vendor icon -->
+
+        <!-- Region-->
+        <div class="region-text-container">
+          <div class="comparison-text">
+            {{Comparison_VMdata[0]['region']}}
+          </div>
+        </div>
+        <!-- Region -->
+
+        <!-- CPU -->
+        <div class="cpu-icon-text-container">
+          <div class="comparison-icon-container">
+            <img src="assets/CPU_icon.png" style="max-height: 5vh;" />
+          </div>
+          <div class="comparison-text">
+            {{Comparison_VMdata[0]['vCPUs']}}
+          </div>
+        </div>
+        <!-- CPU -->
+
+        <!-- GPU -->
+        <div class="gpu-icon-text-container">
+          <div class="comparison-icon-container">
+            <img src="assets/GPU_icon.png" style="max-height: 5vh" />
+          </div>
+          <div class="comparison-text">
+            {{Comparison_VMdata[0]['gPUs']}} GB
+          </div>
+        </div>
+        <!-- GPU -->
+
+        <!-- Memory -->
+        <div class="memory-text-conatiner">
+          <div class="comparison-icon-container">
+            <img src="assets/RAM_icon.png" style="max-height: 5vh;"/>
+          </div>
+          <div class="comparison-text">
+            {{Comparison_VMdata[0]['memory']}} GB
+          </div>
+        </div>
+        <!-- Memory -->
+
+        <!-- latency -->
+        <div class="latency-text-container">
+          <div class="comparison-text">
+            {{Comparison_VMdata[0]['latencyFromYou']}} ms
+          </div>
+          <!-- latency ms compare -->
+          <!-- latency VM[0] ms > latency VM[1] ms DON'T SHOW TEXT !-->
+          <div class="which-is-slower-container">
+            <div class="slower-text" *ngIf="Comparison_VMdata[0]['latencyFromYou'] > Comparison_VMdata[1]['latencyFromYou']">
+            </div>
+          </div>
+          <!-- latency VM[0] ms > latency VM[1] ms DON'T SHOW TEXT !-->
+
+          <!-- latency VM[0] ms < latency VM[1] ms SHOW TEXT !-->
+          <div class="which-is-slower-container">
+            <div class="slower-text" *ngIf="Comparison_VMdata[0]['latencyFromYou'] < Comparison_VMdata[1]['latencyFromYou']">
+              Up to {{latency_saved * 100 | number: '1.0-2'}} % faster
+            </div>
+          </div>
+          <!-- latency VM[0] ms < latency VM[1] ms SHOW TEXT !-->
+          <!-- latency ms compare-->
+        </div>
+        <!-- latency -->
+
+
+        <!-- Price -->
+        <div class="price-text-container">
+          <div class="comparison-text">
+            $ {{Comparison_VMdata[0]['monthlyCost'] | number: '1.0-2'}}
+          </div>
+
+          <!-- saved how much? -->
+          <!-- Price VM[0] > VM[1] DON'T SHOW TEXT !-->
+          <div class="Saved-How-Much-container">
+            <div class="saved-text"
+              *ngIf="Comparison_VMdata[0]['monthlyCost'] > Comparison_VMdata[1]['monthlyCost']">
+            </div>
+          </div>
+          <!-- Price VM[0] > VM[1] DON'T SHOW TEXT !-->
+
+          <!-- Price VM[0] < VM[1] SHOW TEXT !-->
+          <div class="Saved-How-Much-container">
+            <div class="saved-text"
+              *ngIf="Comparison_VMdata[0]['monthlyCost'] < Comparison_VMdata[1]['monthlyCost']">
+              {{cost_saved * 100 | number: '1.0-2'}} % saved
+            </div>
+          </div>
+          <!-- Price VM[0] < VM[1] SHOW TEXT !-->
+          <!-- Saved how much? -->
+        </div>
+
+        <!-- Price -->
+
+        <!-- logo -->
+        <div class="logo-container">
+          <img src="assets/Caloudi-Icon-80x80.png"/>
+        </div>
+        <!-- logo -->
+
+      </div>
+
+      <!-- Comparison right container -->
+      <div class="right-comparison-container col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+
+        <!-- Machine name -->
+        <div class="machine-type-container">
+          <div class="comparison-text">
+            {{Comparison_VMdata[1]['machineType']}}
+          </div>
+        </div>
+        <!-- Machine name -->
+
+        <!-- vendor icon -->
+        <div class="vendor-container">
+          <div class="vednor-icon">
+            <img src="assets/Azure.png" style="max-height: 8vh;" *ngIf="Comparison_VMdata[1]['vendor']==='Azure'" />
+            <img src="assets/GCP.png" style="max-height: 8vh" *ngIf="Comparison_VMdata[1]['vendor']==='GCP'" />
+            <img src="assets/AWS.png" style="max-height: 8vh" *ngIf="Comparison_VMdata[1]['vendor']==='AWS'" />
+          </div>
+        </div>
+        <!-- vendor icon -->
+
+        <!-- Region-->
+        <div class="region-text-container">
+          <div class="comparison-text">
+            {{Comparison_VMdata[1]['region']}}
+          </div>
+        </div>
+        <!-- Region -->
+
+        <!-- CPU -->
+        <div class="cpu-icon-text-container">
+          <div class="comparison-icon-container">
+            <img src="assets/CPU_icon.png" style="max-height: 5vh;" />
+          </div>
+          <div class="comparison-text">
+            {{Comparison_VMdata[1]['vCPUs']}}
+          </div>
+        </div>
+        <!-- CPU -->
+
+        <!-- GPU -->
+        <div class="gpu-icon-text-container">
+          <div class="comparison-icon-container">
+            <img src="assets/GPU_icon.png" style="max-height: 5vh"/>
+          </div>
+          <div class="comparison-text">
+            {{Comparison_VMdata[1]['gPUs']}} GB
+          </div>
+        </div>
+        <!-- GPU -->
+
+        <!-- Memory -->
+        <div class="memory-text-conatiner">
+          <div class="comparison-icon-container">
+            <img src="assets/RAM_icon.png" style="max-height: 5vh;" />
+          </div>
+          <div class="comparison-text">
+            {{Comparison_VMdata[1]['memory']}} GB
+          </div>
+        </div>
+        <!-- Memory -->
+
+        <!-- latency -->
+        <div class="latency-text-container">
+          <div class="comparison-text">
+            {{Comparison_VMdata[1]['latencyFromYou']}} ms
+          </div>
+
+          <!-- latency ms compare -->
+          <!-- latency VM[0] ms > latency VM[1] ms SHOW TEXT !-->
+          <div class="which-is-slower-container">
+            <div class="slower-text" *ngIf="Comparison_VMdata[0]['latencyFromYou'] > Comparison_VMdata[1]['latencyFromYou']">
+              Up to {{latency_saved * 100 | number: '1.0-2'}} % faster
+            </div>
+          </div>
+          <!-- latency VM[0] ms > latency VM[1] ms DON'T SHOW TEXT !-->
+
+          <!-- latency VM[0] ms < latency VM[1] ms DON'T SHOW TEXT !-->
+          <div class="which-is-slower-container">
+            <div class="slower-text" *ngIf="Comparison_VMdata[0]['latencyFromYou'] < Comparison_VMdata[1]['latencyFromYou']">
+            </div>
+          </div>
+          <!-- latency VM[0] ms < latency VM[1] ms DON'T SHOW TEXT !-->
+          <!-- latency ms compare-->
+
+        </div>
+        <!-- latency -->
+
+        <!-- Price -->
+        <div class="price-text-container">
+          <div class="comparison-text">
+            $ {{Comparison_VMdata[1]['monthlyCost'] | number: '1.0-2'}}
+          </div>
+
+          <!-- saved how much? -->
+          <!-- Price VM[0] > VM[1] SHOW TEXT !-->
+          <div class="Saved-How-Much-container">
+            <div class="saved-text"
+              *ngIf="Comparison_VMdata[0]['monthlyCost'] > Comparison_VMdata[1]['monthlyCost']">
+              {{cost_saved * 100 | number: '1.0-2'}} % saved
+            </div>
+          </div>
+          <!-- Price VM[0] > VM[1] SHOW TEXT !-->
+
+          <!-- Price VM[0] < VM[1] DON'T SHOW TEXT !-->
+          <div class="Saved-How-Much-container">
+            <div class="saved-text"
+              *ngIf="Comparison_VMdata[0]['monthlyCost'] < Comparison_VMdata[1]['monthlyCost']">
+            </div>
+          </div>
+          <!-- Price VM[1] < VM[0] DON'T SHOW TEXT !-->
+          <!-- Saved how much? -->
+        </div>
+
+        <!-- Price -->
+
+        <!-- logo -->
+        <div class="logo-container">
+          <img src="assets/Caloudi-Icon-80x80.png" />
+        </div>
+        <!-- logo -->
+
+      </div>
+    </div>
+</div>
+

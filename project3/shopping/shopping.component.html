@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <title>Shopping Cart</title>
+</head>
+
+<body>
+
+  <!--  navbar block -->
+  <div class="Shopping_nav_background">
+    <!--  navbar -->
+    <digi-menu></digi-menu>
+
+    <div class="shopping_navbar_document">
+      <div class="shopping_navbar_title">
+
+
+        <p>Shopping Cart</p>
+      </div>
+
+      <div class="describe">
+        <p class="navbar_content">
+          Your selected virtual Machines
+          and see total estimated cost
+        </p>
+      </div>
+
+    </div>
+  </div>
+  <!-- content block  -->
+  <div class="content-background">
+
+    <div class="card  mx-auto  border-0" style="width: 90%;">
+      <!-- Content title : left arrow and context -->
+      <div class="row ">
+        <!-- left-arrow -->
+        <div class="col-2">
+          <span class="left_arrow">
+            <a [routerLink]="['/mainpage']">
+              <i class="fa-solid fa-arrow-left" style="margin-top: 15px ; color: white;"></i>
+            </a>
+
+          </span>
+        </div>
+
+        <!-- content title -->
+        <div class="col-8" style="margin: auto;">
+          <div class="card-header question ">
+            Your Shopping Cart
+          </div>
+        </div>
+        <div class="col-2">
+
+        </div>
+      </div>
+
+      <!-- content  -->
+      <div class="content_block overflow-auto">
+
+        <div id="selected_area ">
+
+          <!-- estimated price -->
+          <div id="selected_area_contain3">
+            <div class="row" style="
+            width: 80vw;
+            margin: auto;">
+              <div class="estimated_price">Estimated prices : {{shopping_cart_sum | number: '1.0-2'}} USD</div>
+            </div>
+            <hr class="divider">
+
+          </div>
+        </div>
+
+        <!-- main item area -->
+        <div id="Main_area">
+
+          <!-- selected items -->
+
+          <div id="table_style" *ngIf='shoppingCard_data_length>0'>
+
+            <!-- carousel  -->
+            <div class="main_carousel">
+              <p-carousel [value]="shoppingCard_data" [numVisible]="3" [numScroll]="3" [circular]="false"
+                [responsiveOptions]="responsiveOptions">
+
+                <ng-template let-product pTemplate="item">
+                  <div class="product-item">
+                    <div class="product-item-content">
+                      <div class="p-mb-3">
+                      </div>
+                      <div>
+                        <!-- logo & region  -->
+                        <div class="carousel_logo">
+                          <img src="assets/Azure.png" class=" azure_logo" *ngIf="product.vendor==='Azure'" />
+                          <img src="assets/GCP.png" class=" gcp_logo" *ngIf="product.vendor==='GCP'" />
+                          <img src="assets/AWS.png" class=" aws_logo" *ngIf="product.vendor==='AWS'" />
+                          <div style="text-align: center; font-size: 16px; margin-top: 5%;">{{ product.region }}</div>
+
+                        </div>
+
+                        <!-- machine type -->
+                        <!-- <h6 class="p-mt-0 p-mb-3">${{product.machineType}}</h6> -->
+                        <div class="col" style="text-align:center; font-size: larger;">
+                          <div class="mach_type">Machine Type : {{ product.machineType }}</div>
+                          <div style="margin-top: 3%;">Memory :{{ product.memory }}</div>
+                          <div style="margin-top: 3%;">GPU : {{ product.gPUs }}</div>
+                          <div style="margin-top: 3%;">vCPUs : {{ product.vCPUs }}</div>
+                        </div>
+
+                        <!-- monthly cost -->
+                        <span class="text-end text-primary item_cost_css" align="center"
+                          style=" margin-top: 5%; font-size: larger;">
+                          $ {{ product.monthlyCost | number: '1.0-2' }}
+                        </span>
+
+                        <!-- quantity -->
+                        <div class="row quantity_button_adjust" style=" margin-top: 5%; ">
+                          <div class="col-4 quantity_col">
+                            <button type="button" class="btn btn-light btn-circle " id="Quantity_btn"
+                              (click)="Sub_button_Quantity(product)">－</button>
+                          </div>
+
+                          <div class="col-4 quantity_col text_css">
+
+                            {{ product.Quantity}}
+
+                          </div>
+
+                          <div class="col-4 quantity_col">
+                            <button type="button" class="btn btn-light btn-circle " id="Quantity_btn"
+                              (click)="Add_button_Quantity(product)">+</button>
+                          </div>
+
+                        </div>
+
+
+                        <!-- total cost -->
+                        <span class="text-end text-primary item_cost_css" align="center"
+                          style=" margin-top: 5%; font-size: larger;">
+                          $ {{ product.Quantity * product.monthlyCost | number: '1.0-2'}}
+                        </span>
+                        <!-- action  -->
+                        <button type="button" class="btn btn-light"
+                          style=" margin-top: 15%;  margin-bottom: 10%; font-size: larger;" id="action_btn"
+                          (click)="Delete_button(product)">Delete</button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-carousel>
+            </div>
+
+            <!-- end of carousel  -->
+
+
+            <div class="main_table">
+              <!-- p-table main item-->
+              <p-table responsiveLayout="stack" [value]="shoppingCard_data" scrollHeight="flex" [columns]="tableColumn">
+                <!-- header -->
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th style="text-align: center;">Vendor</th>
+                    <th style="text-align: center;">MachineType</th>
+                    <th style="text-align: center;">MonthlyCost</th>
+                    <th style="text-align: center;">quantity</th>
+                    <th style="text-align: center;">Total Cost</th>
+                    <th style="text-align: center;">Action</th>
+                  </tr>
+                </ng-template>
+
+                <!-- content -->
+                <ng-template pTemplate="body" let-product let-column="columns">
+
+                  <tr>
+                    <!-- logo and region -->
+                    <td>
+                      <div style="margin: auto; ">
+                        <img src="assets/Azure.png" class="azure_logo" *ngIf="product.vendor==='Azure'" />
+                        <img src="assets/GCP.png" class="gcp_logo" *ngIf="product.vendor==='GCP'" />
+                        <img src="assets/AWS.png" class="aws_logo" *ngIf="product.vendor==='AWS'" />
+                        <div style="text-align: center; font-size: 16px;">{{ product.region }}</div>
+                      </div>
+
+                    </td>
+
+                    <!-- machine type -->
+                    <td>
+                      <div class="col" style="text-align:center; ">
+                        <div class="mach_type">Machine Type : {{ product.machineType }}</div>
+                        <div class="mach_specs">Memory :{{ product.memory }}</div>
+                        <div>GPU : {{ product.gPUs }}</div>
+                        <div>vCPUs : {{ product.vCPUs }}</div>
+                      </div>
+                    </td>
+
+                    <!-- Monthly Cost -->
+                    <td>
+                      <span class="text-end text-primary item_cost_css" align="center">
+                        $ {{ product.monthlyCost | number: '1.0-2' }}
+                      </span>
+
+                    </td>
+
+                    <!-- Quantity -->
+                    <td>
+                      <div class="row quantity_button_adjust">
+                        <div class="col-4 quantity_col">
+                          <button type="button" class="btn btn-light btn-circle " id="Quantity_btn"
+                            (click)="Sub_button_Quantity(product)">－</button>
+                        </div>
+
+                        <div class="col-4 quantity_col text_css">
+
+                          {{ product.Quantity}}
+
+                        </div>
+
+                        <div class="col-4 quantity_col">
+                          <button type="button" class="btn btn-light btn-circle " id="Quantity_btn"
+                            (click)="Add_button_Quantity(product)">+</button>
+                        </div>
+
+                      </div>
+
+
+                    </td>
+
+                    <!-- total cost -->
+                    <td>
+                      <span class="text-end text-primary item_cost_css" align="center">
+                        $ {{ product.Quantity * product.monthlyCost | number: '1.0-2'}}
+                      </span>
+                    </td>
+
+                    <!-- Action -->
+                    <td>
+                      <button type="button" class="btn btn-light" style="  margin-bottom: 10%;" id="action_btn"
+                        (click)="Delete_button(product)">Delete</button>
+                    </td>
+                  </tr>
+
+
+                  <!-- </tr> -->
+                </ng-template>
+
+              </p-table>
+            </div>
+
+
+
+
+            <!-- button for exporting csv file   -->
+            <div style=" margin: auto; width: 100%;">
+              <button class="btn btn-outline-dark slected_button p-2 export_btn" (click)="exportexcel()">Export to
+                Excel</button>
+            </div>
+
+          </div>
+
+
+
+
+
+          <!-- recommendation items  -->
+          <div id="Recommended_line" *ngIf='shoppingCard_data_length>0'>
+
+
+
+            <!-- ------------------old recommendation table------------------------------ -->
+            <div id="RECOMMENDED_text">
+              You may also like :
+            </div>
+
+            <!-- new table -->
+
+            <!-- p-table main item-->
+            <p-table responsiveLayout="stack" [value]="recommended_Testdata" scrollHeight="flex"
+              [columns]="tableColumn">
+              <!-- header -->
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th style="
+                  text-align: center;">Vendor</th>
+                  <th style="
+                  text-align: center;">MachineType</th>
+                  <th style="
+                  text-align: center;">MonthlyCost</th>
+                  <th style="
+                  text-align: center;">quantity</th>
+                  <th style="
+                  text-align: center;">Total Cost</th>
+                  <th style="
+                  text-align: center;">Action</th>
+                </tr>
+              </ng-template>
+
+              <!-- content -->
+              <ng-template pTemplate="body" let-product let-column="columns">
+
+
+                <tr>
+                  <!-- logo and region -->
+                  <td>
+                    <div style="margin: auto; ">
+                      <img src="assets/Azure.png" class="azure_logo" *ngIf="product.vendor==='Azure'" />
+                      <img src="assets/GCP.png" class="gcp_logo" *ngIf="product.vendor==='GCP'" />
+                      <img src="assets/AWS.png" class="aws_logo" *ngIf="product.vendor==='AWS'" />
+                      <div style="text-align: center; font-size: 16px;">{{ product.region }}</div>
+                    </div>
+                  </td>
+
+                  <!-- machine type -->
+                  <td>
+                    <div class="col" style="text-align:center;">
+                      <div class="mach_type">Machine Type : {{ product.machineType }}</div>
+                      <div>Memory :{{ product.memory }}</div>
+                      <div>GPU : {{ product.gPUs }}</div>
+                      <div>vCPUs : {{ product.vCPUs }}</div>
+                    </div>
+                  </td>
+
+                  <!-- Monthly Cost -->
+                  <td>
+                    <span class="text-end text-primary item_cost_css">
+                      $ {{ product.monthlyCost | number: '1.0-2' }}
+                    </span>
+
+                  </td>
+
+                  <!-- Quantity -->
+                  <td>
+                    <div class="row quantity_button_adjust">
+                      <div class="col-4 quantity_col">
+                        <button type="button" class="btn btn-light btn-circle " id="Quantity_btn"
+                          (click)="Sub_button_Quantity(product)">－</button>
+                      </div>
+                      <div class="col-4 quantity_col text_css">
+                        {{ product.Quantity}}
+                      </div>
+                      <div class="col-4 quantity_col">
+                        <button type="button" class="btn btn-light btn-circle " id="Quantity_btn"
+                          (click)="Add_button_Quantity(product)">+</button>
+                      </div>
+                    </div>
+
+
+
+
+                  </td>
+                  <!-- style="font-size: 30px; text-align: center; font-weight:bold; margin-right: 3%;" -->
+
+                  <!-- total cost -->
+                  <td>
+                    <span class="text text-primary item_cost_css" align="center">
+                      $ {{ product.Quantity * product.monthlyCost | number: '1.0-2'}}
+                    </span>
+                  </td>
+
+                  <!-- Action Add -->
+                  <td>
+                    <div class="row" style="width: inherit;  margin: auto; "> <button type="button"
+                        class=" btn btn-light " id="recom_action_btn" (click)="ReAdd_button(product)">Add</button>
+                    </div>
+                    <div class="row" style="width: inherit;  margin: auto; "><button type="button"
+                        class=" btn btn-light" id="recom_action_btn"
+                        (click)="Delete_Recom_button(product)">Remove</button></div>
+                    <!-- btn btn-light -->
+
+                  </td>
+
+                </tr>
+
+
+                <!-- </tr> -->
+              </ng-template>
+
+            </p-table>
+
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
+
+
+  </div>
+
+
+</body>
+
+</html>

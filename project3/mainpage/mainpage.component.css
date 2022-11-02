@@ -1,0 +1,367 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.back-navigation {
+    width: 70px;
+    padding: 10px 10px 10px 30px;
+}
+
+.back-btn {
+    background-color: black;
+}
+
+.bottom-container {
+    padding: 20px;
+    margin: 0;
+    width: 100%;
+    height: fit-content;
+}
+
+.Currency-text-container {
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    width: 100%;
+    padding: 10px 0px 10px 0px;
+}
+
+.Currency-text {
+    font-size: 2rem;
+}
+
+.currency-select-filter-container {
+    width: 100%;
+    box-shadow: 5px 5px 5px #7D7C7C;
+}
+
+.choose-preference-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.cpu-icon-text-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.comparison-text {
+    font-size: 3rem;
+}
+
+.divide-line {
+    width: 90%;
+    height: 1px;
+    display: flex;
+    margin: 0;
+
+}
+
+.describe {
+    width: 300px;
+    margin-top: 5px;
+}
+
+.full-bg {
+    background: linear-gradient(.95turn  ,rgba(207, 114, 205, 1) 10%, #1F45FC 30%, #04d9ff 50%, #90eeff 55%, black 60%);
+    overflow-x: auto;
+    width: 100vw;
+    height: 100vh;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+    background-color: white;
+    border-radius: 20px;
+
+}
+
+.filter-text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+}
+
+.Filter-text {
+    font-size: 2.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.gpu-icon-text-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.left-container {
+    height: 100%;
+    padding-bottom: 3rem;
+    margin-bottom: 10rem;
+}
+
+.left-comparison-container {
+    height: 100%;
+    background-color: #fff;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+}
+
+.light-bulb-image {
+    height: 60px;
+    padding: 0px 10px 0px 10px;
+}
+
+.latency-text-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.machine-type-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.memory-text-conatiner {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.next-button-container{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    height: fit-content;
+}
+
+#next-button {
+    width: 100%;
+    height: 3.5rem;
+    background-color: #fff;
+    font-size: 1.5rem;
+    border-color: #eee;
+    border-radius: 5px;
+    
+}
+
+::ng-deep .p-paginator .p-paginator-pages .p-paginator-page {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #E8EBFD;
+    border-radius: 0% !important; 
+}
+
+.navbar_content {
+    width: 15vw;
+}
+
+.preference-select-filter-container {
+    padding: 0;
+}
+
+.price-text-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.query-button-container {
+    display: flex;
+    width: 100%;
+    padding: 30px 10px 10px 10px;
+    justify-content: center;
+}
+
+#query-button {
+    width: 50rem;
+    height: 30px;
+    border-radius: 10px;
+    color: #4DA0BF;
+    background-color: white;
+    border-width: 0.5px 1px 2px 0.5px;
+    border-style: solid;
+    border-color: rgba(77, 160, 191, 0.5);
+}
+
+.right-container {
+    height: 100%;
+    border-radius: 10px;
+}
+
+.right-comparison-container {
+        height: 80%;
+        background-color: #fff;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+        border-radius: 10px;
+}
+
+
+.recommend-container {
+    margin-top: 1vh;
+    height: 21vh;
+    background-color: white;
+    border-radius: 20px;
+    
+}
+
+.recommend-top-container {
+    display: flex;
+    flex-direction: row;
+    padding: 1vh;
+    padding-bottom: 0.5vh;
+}
+
+.recommend-top-left-container {
+    display: flex;
+    justify-content: center;
+}
+
+.recommend-top-right-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    color: #54595f;
+}
+
+.recommend-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.recommend-bottom-button-container {
+    padding: 1vh;
+    padding-top: 0.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+#recommend-button {
+    background: #fff;
+    width: 90vw;
+    height: 7vh;
+    border: 0.5px solid #333333;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    border-width: 0.5px 1px 2px 0.5px;
+    border-style: solid;
+    border-color: #333333;
+}
+
+.region-text-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.select-filter-container {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    width: 90%;
+}
+
+.saved-text {
+    color: red;
+}
+
+.slower-text {
+    color: red;
+}
+
+.Query_nav_background {
+    background-image: url(./Nav_background.png);
+    background-size: cover;
+    height: 20vh;
+    align-items: top;
+    display: flex;
+    width: 101vw;
+    justify-items: center;
+    min-height: 220px;
+}
+
+
+.Query_navbar_document {
+
+    height: 60px;
+    width: 300px;
+    position: relative;
+    margin-top: 70px;
+    margin-left: 50px;
+    color: #ffffff;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.Query_navbar_title {
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.top-container {
+    padding: 20px;
+    padding-right: 0;
+}
+
+
+.Text-Title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.top-text {
+    font-size: 30px;
+    color: white;
+    margin: 0;
+    padding: 10px;
+}
+
+.table-container {
+    background-color: white;
+    border-radius: 10px;
+    height: 100%;
+}
+
+.vendor-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+    
+
+
+
+
