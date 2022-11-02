@@ -35,6 +35,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
       * [GCP] (https://gcpinstances.doit-intl.com/)
       * [AWS] (https://aws.amazon.com/tw/ec2/pricing/on-demand/)
     * Api   
-     * Azure: http://35.204.125.116:3389/azure_v2
-     * GCP: http://35.204.125.116:3389/gcp_v2
-     * AWS: http://35.204.125.116:3389/aws_v2
+      * Azure: http://35.204.125.116:3389/azure_v2
+      * GCP: http://35.204.125.116:3389/gcp_v2
+      * AWS: http://35.204.125.116:3389/aws_v2
