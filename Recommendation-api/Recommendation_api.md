@@ -22,7 +22,7 @@
       * Notice
         * Region: AWS and GCP use region, Azure use regionID
         * Memory: Azure use Megabyte(MB)
-        * Project ip address:  = 35.204.125.116
+        * Project ip address = 35.204.125.116
         
       * Example
       
