@@ -54,7 +54,7 @@
               }
             ```
          
-## Vendor data source
+## Recommendation data source
   * [Azure](https://azureprice.net/)
   * [GCP](https://gcpinstances.doit-intl.com/)
   * [AWS](https://aws.amazon.com/tw/ec2/pricing/on-demand/)
