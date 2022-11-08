@@ -12,7 +12,7 @@
         sudo python3 run.py
       ``` 
       
-   3. __Test api__
+   3. __Test api server__
    
       * URL
         * Azure: http://(your ip address):3389/azure_v2
